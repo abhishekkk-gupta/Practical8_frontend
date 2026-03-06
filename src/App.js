@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
 
 function App() {
+
+  const [username,setUsername]=useState("")
+  const [password,setPassword]=useState("")
+  const [token,setToken]=useState("")
+  const [message,setMessage]=useState("")
+
+  const login = async () => {
+
+    try{
+
+      const res = await axios.post("http://localhost:5000/login",{
+        username,
+        password
+      })
+
+      setToken(res.data.access_token)
+      setMessage("Login Successful")
+
+    }
+    catch(err){
+      setMessage("Invalid Login")
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div style={{textAlign:"center",marginTop:"100px"}}>
+
+      <h2>Login</h2>
+
+      <input
+      placeholder="Username"
+      onChange={(e)=>setUsername(e.target.value)}
+      />
+
+      <br/><br/>
+
+      <input
+      type="password"
+      placeholder="Password"
+      onChange={(e)=>setPassword(e.target.value)}
+      />
+
+      <br/><br/>
+
+      <button onClick={login}>Login</button>
+
+      <p>{message}</p>
+
+      {token && <p>Token Generated</p>}
+
     </div>
-  );
+
+  )
 }
 
-export default App;
+export default App
