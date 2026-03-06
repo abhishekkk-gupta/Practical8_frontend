@@ -12,7 +12,7 @@ function App() {
 
     try{
 
-      const res = await axios.post("https://fsd-practical-8.onrender.com",{
+      const res = await axios.post("https://fsd-practical-8.onrender.com/login",{
         username,
         password
       })
